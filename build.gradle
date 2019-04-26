@@ -1,8 +1,15 @@
 plugins {
     id 'eu.xenit.amp' version "0.2.0"
+    id 'signing'
+    id 'maven-publish'
+    id "io.codearte.nexus-staging" version "0.20.0"
 }
 
-group = 'eu.xenit.alfresco'
+wrapper {
+    gradleVersion = "5.3.1"
+}
+
+group = 'eu.xenit'
 description = 'Hotfix for MNT-20557'
 
 def baseVersion = "1.0.0"
@@ -27,7 +34,7 @@ sourceSets {
     }
 }
 
-jar.enabled = false // Disable default jar
+jar.enabled = false // Disable default jar task
 
 task jsr250Jar(type: Jar) {
     baseName = "jsr250-api"
@@ -43,6 +50,71 @@ tasks.getByName("amp") {
     libs.from(jsr250Jar, geronimoAnnotationJar)
 }
 
-wrapper {
-    gradleVersion = "5.3.1"
+nexusStaging {
+    username = project.hasProperty('de_publish_username') ? project.de_publish_username : ''
+    password = project.hasProperty('de_publish_password') ? project.de_publish_password : ''
+    packageGroup = "eu.xenit"
+}
+
+artifacts {
+    archives amp
+}
+
+signing {
+    required { !version.endsWith('SNAPSHOT') && gradle.taskGraph.hasTask("publish") }
+    sign configurations.archives
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifact amp
+
+            pom {
+                url = 'https://github.com/xenit-eu/alfresco-hotfix-MNT-20557'
+
+                scm {
+                    connection = 'scm:git:git@github.com:xenit-eu/alfresco-hotfix-MNT-20557.git'
+                    developerConnection = 'scm:git:git@github.com:xenit-eu/alfresco-hotfix-MNT-20557.git'
+                    url = 'https://github.com/xenit-eu/alfresco-hotfix-MNT-20557'
+                }
+
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            def releasesRepoUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+            def snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
+            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+
+            credentials {
+                username = project.hasProperty('de_publish_username') ? project.de_publish_username : ''
+                password = project.hasProperty('de_publish_password') ? project.de_publish_password : ''
+            }
+        }
+    }
+}
+
+gradle.taskGraph.whenReady { graph ->
+    if (graph.hasTask(publish)) {
+        if (!project.hasProperty('keyId') || !project.hasProperty('secretKeyRingFile') || !project.hasProperty('password')) {
+            throw new GradleException('You need to provide signing params in order to sign artifacts')
+        }
+
+        def id = project.hasProperty('keyId') ? project.keyId : ''
+        def file = project.hasProperty('secretKeyRingFile') ? project.secretKeyRingFile : ''
+        def password = project.hasProperty('password') ? project.password : ''
+
+        ext."signing.keyId" = id
+        ext."signing.secretKeyRingFile" = file
+        ext."signing.password" = password
+    }
 }
