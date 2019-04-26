@@ -12,7 +12,7 @@ wrapper {
 group = 'eu.xenit.alfresco'
 description = 'Hotfix for MNT-20557'
 
-def baseVersion = "1.0.0"
+def baseVersion = "1.0.1"
 
 def branchName = System.env.BRANCH_NAME
 def isRelease = branchName != null && branchName.startsWith("release")
@@ -25,10 +25,10 @@ sourceSets {
     main {
         amp {
             module([
-                    "module.id"         : project.group + "." + project.name,
-                    "module.version"    : project.version,
-                    "module.title"      : project.name,
-                    "module.description": project.description,
+                    "module.id"               : project.group + "." + project.name,
+                    "module.version"          : project.version,
+                    "module.title"            : project.name,
+                    "module.description"      : project.description,
                     "module.repo.version.min" : "6.1.0",
                     "module.repo.version.max" : "6.1.99"
             ])
