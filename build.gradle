@@ -9,7 +9,7 @@ wrapper {
     gradleVersion = "5.3.1"
 }
 
-group = 'eu.xenit.alfresco'
+group = 'eu.xenit'
 description = 'Hotfix for MNT-20557'
 
 def baseVersion = "1.0.0"
@@ -72,6 +72,8 @@ publishing {
 
             pom {
                 url = 'https://github.com/xenit-eu/alfresco-hotfix-MNT-20557'
+                name = project.name
+                description = project.description
 
                 scm {
                     connection = 'scm:git:git@github.com:xenit-eu/alfresco-hotfix-MNT-20557.git'
