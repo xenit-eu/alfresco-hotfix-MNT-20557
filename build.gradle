@@ -9,7 +9,7 @@ wrapper {
     gradleVersion = "5.3.1"
 }
 
-group = 'eu.xenit'
+group = 'eu.xenit.alfresco'
 description = 'Hotfix for MNT-20557'
 
 def baseVersion = "1.0.0"
@@ -29,6 +29,8 @@ sourceSets {
                     "module.version"    : project.version,
                     "module.title"      : project.name,
                     "module.description": project.description,
+                    "module.repo.version.min" : "6.1.0",
+                    "module.repo.version.max" : "6.1.99"
             ])
         }
     }
@@ -54,15 +56,6 @@ nexusStaging {
     username = project.hasProperty('de_publish_username') ? project.de_publish_username : ''
     password = project.hasProperty('de_publish_password') ? project.de_publish_password : ''
     packageGroup = project.group
-}
-
-artifacts {
-    archives amp
-}
-
-signing {
-    required { !version.endsWith('SNAPSHOT') && gradle.taskGraph.hasTask("publish") }
-    sign configurations.archives
 }
 
 publishing {
@@ -103,6 +96,11 @@ publishing {
             }
         }
     }
+}
+
+signing {
+    required { !version.endsWith('SNAPSHOT') && gradle.taskGraph.hasTask("publish") }
+    sign publishing.publications.mavenJava
 }
 
 gradle.taskGraph.whenReady { graph ->
