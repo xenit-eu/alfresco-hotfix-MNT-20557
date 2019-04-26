@@ -9,7 +9,7 @@ wrapper {
     gradleVersion = "5.3.1"
 }
 
-group = 'eu.xenit'
+group = 'eu.xenit.alfresco'
 description = 'Hotfix for MNT-20557'
 
 def baseVersion = "1.0.0"
@@ -53,7 +53,7 @@ tasks.getByName("amp") {
 nexusStaging {
     username = project.hasProperty('de_publish_username') ? project.de_publish_username : ''
     password = project.hasProperty('de_publish_password') ? project.de_publish_password : ''
-    packageGroup = "eu.xenit"
+    packageGroup = project.group
 }
 
 artifacts {
