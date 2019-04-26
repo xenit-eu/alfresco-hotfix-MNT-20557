@@ -1,0 +1,48 @@
+plugins {
+    id 'eu.xenit.amp' version "0.2.0"
+}
+
+group = 'eu.xenit.alfresco'
+description = 'Hotfix for MNT-20557'
+
+def baseVersion = "1.0.0"
+
+def branchName = System.env.BRANCH_NAME
+def isRelease = branchName != null && branchName.startsWith("release")
+if (isRelease)
+    version = "$baseVersion"
+else
+    version = "$baseVersion-SNAPSHOT"
+
+sourceSets {
+    main {
+        amp {
+            module([
+                    "module.id"         : project.group + "." + project.name,
+                    "module.version"    : project.version,
+                    "module.title"      : project.name,
+                    "module.description": project.description,
+            ])
+        }
+    }
+}
+
+jar.enabled = false // Disable default jar
+
+task jsr250Jar(type: Jar) {
+    baseName = "jsr250-api"
+    version = "1.0"
+}
+
+task geronimoAnnotationJar(type: Jar) {
+    baseName = "geronimo-annotation_1.0_spec"
+    version = "1.1.1"
+}
+
+tasks.getByName("amp") {
+    libs.from(jsr250Jar, geronimoAnnotationJar)
+}
+
+wrapper {
+    gradleVersion = "5.3.1"
+}
