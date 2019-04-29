@@ -6,7 +6,7 @@ plugins {
 }
 
 wrapper {
-    gradleVersion = "5.3.1"
+    gradleVersion = "5.4.1"
 }
 
 group = 'eu.xenit.alfresco'
@@ -20,21 +20,6 @@ if (isRelease)
     version = "$baseVersion"
 else
     version = "$baseVersion-SNAPSHOT"
-
-sourceSets {
-    main {
-        amp {
-            module([
-                    "module.id"               : project.group + "." + project.name,
-                    "module.version"          : project.version,
-                    "module.title"            : project.name,
-                    "module.description"      : project.description,
-                    "module.repo.version.min" : "6.1.0",
-                    "module.repo.version.max" : "6.1.99"
-            ])
-        }
-    }
-}
 
 jar.enabled = false // Disable default jar task
 
