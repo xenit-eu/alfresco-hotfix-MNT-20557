@@ -4,3 +4,16 @@ The Alfresco Module Package build by this project will install two **empty** jar
 of the Alfresco distribution: `jsr250-api-1.0.jar` and `geronimo-annotation_1.0_spec-1.1.1.jar`. This 
 will result in an Alfresco that has only one implementation of the JSR-250 'Common Annotations' specification 
 on the classpath.
+
+## Artifact Coordinates
+
+The AMP artifact is available in Maven Central:
+
+```xml
+<dependency>
+  <groupId>eu.xenit.alfresco</groupId>
+  <artifactId>alfresco-hotfix-MNT-20557</artifactId>
+  <version>check last version in Maven Central</version>
+  <type>amp</type>
+</dependency>
+```
