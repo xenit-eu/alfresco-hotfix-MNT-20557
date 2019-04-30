@@ -32,5 +32,5 @@ The AMP artifact is available in Maven Central:
 
 > The `javax.annotation.Resource` class in `jsr250-api-1.0.jar` does not define / provide the `String lookup()` method, while the `javax.annotation-api-1.2.jar` (Alfresco 6.0) and `javax.annotation-api-1.3.2.jar` (Alfresco 6.1) does, as does the Oracle Java 8 core library `rt.jar`.
 
-This means this was never a problem on JDK8, because the class was loaded from the bootstrap-classloader and never from the system classpath.
-In Java 9 some Java EE modules were deprecated and finally removed in Java 11. This means that `javax.annotation.Resource` is no longer available from the bootstrap classpath, but should be loaded from `javax.annotation:javax.annotation-api` instead.
+* This means this was never a problem on JDK8, because the class was loaded from the bootstrap-classloader and never from the system classpath.
+* In Java 9 some Java EE modules were deprecated and finally removed in Java 11. This means that `javax.annotation.Resource` is no longer available from the bootstrap classpath, but should be loaded from `javax.annotation:javax.annotation-api` instead.
