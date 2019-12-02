@@ -22,7 +22,7 @@ The AMP artifact is available in Maven Central:
 <dependency>
   <groupId>eu.xenit.alfresco</groupId>
   <artifactId>alfresco-hotfix-MNT-20557</artifactId>
-  <version>1.0.1</version>
+  <version>1.0.2</version>
   <type>amp</type>
 </dependency>
 ```

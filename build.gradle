@@ -12,7 +12,7 @@ wrapper {
 group = 'eu.xenit.alfresco'
 description = 'Hotfix for MNT-20557'
 
-def baseVersion = "1.0.1"
+def baseVersion = "1.0.2"
 
 def branchName = System.env.BRANCH_NAME
 def isRelease = branchName != null && branchName.startsWith("release")
