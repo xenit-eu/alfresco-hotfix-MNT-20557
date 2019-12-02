@@ -8,7 +8,7 @@
 >
 > `jsr250-api-1.0.jar` and `geronimo-annotation_1.0_spec-1.1.1.jar` are direct dependencies in alfresco-repository, while `javax.annotation-api-1.2.jar` is a transitive dependency in alfresco-data-model via TIKA parsers.
 
-There are multiple instances of duplicate class definitions on the classpath, but this one in particular blows up with Java 11 in Alfresco 6.1 when you try to use Spring annotations. 
+There are multiple instances of duplicate class definitions on the classpath, but this one in particular blows up with Java 11 in Alfresco 6.1 and higher when you try to use Spring annotations. 
 
 ## Workaround
 
@@ -30,7 +30,7 @@ The AMP artifact is available in Maven Central:
 
 ## Problem analysis
 
-> The `javax.annotation.Resource` class in `jsr250-api-1.0.jar` does not define / provide the `String lookup()` method, while the `javax.annotation-api-1.2.jar` (Alfresco 6.0) and `javax.annotation-api-1.3.2.jar` (Alfresco 6.1) does, as does the Oracle Java 8 core library `rt.jar`.
+> The `javax.annotation.Resource` class in `jsr250-api-1.0.jar` does not define / provide the `String lookup()` method, while the `javax.annotation-api-1.2.jar` (Alfresco 6.0) and `javax.annotation-api-1.3.2.jar` (Alfresco 6.1 / 6.2) does, as does the Oracle Java 8 core library `rt.jar`.
 
 * This means this was never a problem on JDK8, because the class was loaded from the bootstrap-classloader and never from the system classpath.
 * In Java 9 some Java EE modules were deprecated and finally removed in Java 11. This means that `javax.annotation.Resource` is no longer available from the bootstrap classpath, but should be loaded from `javax.annotation:javax.annotation-api` instead.
