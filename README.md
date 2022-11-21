@@ -1,8 +1,8 @@
-# Hotfix for Alfresco issue [MNT-20557](https://issues.alfresco.com/jira/browse/MNT-20557)
+# Hotfix for Alfresco issue [MNT-20557](https://alfresco.atlassian.net/browse/MNT-20557)
 
 ## Description
 
-[MNT-20557](https://issues.alfresco.com/jira/browse/MNT-20557) issue description (credits to Axel Faust):
+[MNT-20557](https://alfresco.atlassian.net/browse/MNT-20557) issue description (credits to Axel Faust):
 
 > Alfresco Content Services 6.x includes `javax.annotation-api-1.2.jar`, `jsr250-api-1.0.jar` and `geronimo-annotation_1.0_spec-1.1.1.jar`. All three JARs are essentially providing the same spec API, albeit from different source projects and in different versions. They overlap in 11 classes which are common in the 1.0 spec version of javax.annotation, with javax.annotation-api-1.2.jar providing a more extensive set of classes.
 >
